@@ -5,6 +5,11 @@ $username = "root";
 $password = ""; // Sesuaikan dengan password MySQL Anda, biasanya kosong
 $database = "studyhub";
 
+// $host = "srv123.main-hosting.eu";
+// $username = "u985354573_aliyakhansa";
+// $password = "1Ayah2Mamah"; // Sesuaikan dengan password MySQL Anda, biasanya kosong
+// $database = "u985354573_studyhub";
+
 // Membuat koneksi
 $conn = mysqli_connect($host, $username, $password, $database);
 

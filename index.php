@@ -86,7 +86,7 @@ if (!empty($search)){
             <h1>STUDYHUB</h1>
             <p>Gama StudyHub adalah adalah ruang belajar bersama khusus mahasiswa UGM yang nyaman, modern, dan mendukung kolaborasi. Dilengkapi dengan fasilitas yang lengkap dan suasana kondusif, Gama StudyHub hadir sebagai solusi untuk kamu yang butuh tempat produktif di lingkungan kampus.</p>
             <div class="hero-buttons mt-4">
-                <button class="btn" onclick="window.location.href='form_booking.php'">Reservasi</button>
+                <button class="btn" onclick="window.location.href='reservasi/pilih_layanan.php'">Reservasi</button>
             </div>
         </section>
 
@@ -132,7 +132,7 @@ if (!empty($search)){
                 <div class="row row-cols-1 row-cols-md-2 rol-cols-lg-4 g-4">
                     <div class="col">
                         <div class="card h-100">
-                            <img src="individualdesk.jpeg" class="card-img-top" alt="Individual Desk">
+                            <img src="assets/individualdesk.jpeg" class="card-img-top" alt="Individual Desk">
                             <div class="card-body">
                                 <h5 class="card-title">Individual Desk</h5>
                                 <p class="card-text">Cocok untuk kamu yang introvert akut</p>
@@ -140,52 +140,60 @@ if (!empty($search)){
 
                             <div class="card-footer d-flex justify-content-between align-items-center">
                                 <small>1 Orang</small>
-                                <button class="btn btn-outline-primary btn-sm">→</button>
+                                <!-- <button class="btn btn-outline-primary btn-sm">→</button> -->
+                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='layanan/individualdesk.php'">→</button>
+                                <!-- <button class="btn" onclick="window.location.href='reservasi/pilih_layanan.php'">Reservasi</button> -->
+
                             </div>
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="card h-100">
-                            <img src="individualdesk.jpeg" class="card-img-top" alt="Individual Desk">
+                            <img src="assets/ruangfokus.jpg" class="card-img-top" alt="Individual Desk">
                             <div class="card-body">
-                                <h5 class="card-title">Individual Desk</h5>
+                                <h5 class="card-title">Ruang Fokus</h5>
                                 <p class="card-text">Cocok untuk kamu yang introvert akut</p>
                             </div>
 
                             <div class="card-footer d-flex justify-content-between align-items-center">
-                                <small>1 Orang</small>
-                                <button class="btn btn-outline-primary btn-sm">→</button>
+                                <small>4 -5 Orang</small>
+                                <!-- <button class="btn btn-outline-primary btn-sm">→</button> -->
+                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='layanan/ruangfokus.php'">→</button>
+
                             </div>
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="card h-100">
-                            <img src="individualdesk.jpeg" class="card-img-top" alt="Individual Desk">
+                            <img src="assets/ruangkreatif.jpg" class="card-img-top" alt="Individual Desk">
                             <div class="card-body">
-                                <h5 class="card-title">Individual Desk</h5>
+                                <h5 class="card-title">Ruang Kreatif</h5>
                                 <p class="card-text">Cocok untuk kamu yang introvert akut</p>
                             </div>
 
                             <div class="card-footer d-flex justify-content-between align-items-center">
-                                <small>1 Orang</small>
-                                <button class="btn btn-outline-primary btn-sm">→</button>
+                                <small>6 -8 Orang</small>
+                                <!-- <button class="btn btn-outline-primary btn-sm">→</button> -->
+                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='layanan/ruangkreatif.php'">→</button>
+
                             </div>
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="card h-100">
-                            <img src="individualdesk.jpeg" class="card-img-top" alt="Individual Desk">
+                            <img src="assets/ruangmeeting.jpg" class="card-img-top" alt="Individual Desk">
                             <div class="card-body">
-                                <h5 class="card-title">Individual Desk</h5>
+                                <h5 class="card-title">Ruang Meeting</h5>
                                 <p class="card-text">Cocok untuk kamu yang introvert akut</p>
                             </div>
 
                             <div class="card-footer d-flex justify-content-between align-items-center">
-                                <small>1 Orang</small>
-                                <button class="btn btn-outline-primary btn-sm">→</button>
+                                <small>9 - 13 Orang</small>
+                                <!-- <button class="btn btn-outline-primary btn-sm">→</button> -->
+                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='layanan/ruangmeeting.php'">→</button>
                             </div>
                         </div>
                     </div>
@@ -269,7 +277,7 @@ if (!empty($search)){
         <section class="py-5">
             <div class="container d-flex flex-column flex-md-row align-items-center">
                 <div class="col-md-6 mb-4 mb-md-0">
-                    <img src="individualdesk.jpeg" class="img-fluid rounded" alt="Study space">
+                    <img src="assets/ruangmeeting.jpg" class="img-fluid rounded" alt="Study space">
                 </div>
                 <div class="col-md-6">
                     <h4>Come On!</h4>
