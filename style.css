@@ -100,8 +100,8 @@ nav a{
     color: #CB6040;
 }
 .facility-icon{
-    width: 64px;
-    height: 64px;
+    width: 80px;
+    height: 80px;
     margin-bottom: 10px;
 }
 .facility-item p{
@@ -173,13 +173,13 @@ nav a{
     color:#0D6172
 }
 .arrow-btn {
-  background-color: #f3915d;
-  color: #FFF9E8;
-  border: none;
-  padding: 6px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+    background-color: #f3915d;
+    color: #FFF9E8;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
 }
 .faq{
     height: 627px;    
@@ -243,55 +243,55 @@ nav a{
     color: #CB6040;
 }
 .cta-schedule {
-  margin-top: 10px;
-  font-size: 14px;
+    margin-top: 10px;
+    font-size: 14px;
 }
 .cta-btn {
-  margin-top: 15px;
-  background-color: #db5930;
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
+    margin-top: 15px;
+    background-color: #db5930;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
 }
 .cta-btn:hover{
     transform: translateY(-5px);
 }
 .footer {
-  background-color: #CB6040;
-  color: #FFEEDB;
-  padding: 40px 60px 20px;
+    background-color: #CB6040;
+    color: #FFEEDB;
+    padding: 40px 60px 20px;
 }
 
 .footer__container {
-  display: flex;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  gap: 40px;
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 40px;
 }
 
 .footer__column {
-  flex: 1;
+    flex: 1;
 }
 
 .footer__column h4 {
-  margin-bottom: 10px;
-  font-weight: bold;
-  font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .footer__column p {
-  margin: 5px 0;
-  font-size: 15px;
+    margin: 5px 0;
+    font-size: 15px;
 }
 
 .footer__bottom {
-  text-align: center;
-  margin-top: 30px;
-  font-size: 15px;
-  color: #FFEEDB;
+    text-align: center;
+    margin-top: 30px;
+    font-size: 15px;
+    color: #FFEEDB;
 }
 

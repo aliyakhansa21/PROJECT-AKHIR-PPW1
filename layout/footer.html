@@ -1,46 +1,82 @@
 <style>
-    footer{
+    footer {
         background-color: #CB6040;
         color: #FFF9E8;
     }
-    .company-logo{
-            width: 48px;
-            height: 48px;
+    .company-logo {
+        width: 48px;
+        height: 48px;
+        display: inline-block; 
     }
+    footer h5 {
+        color: #FFF9E8; 
+        font-weight: bold;
+    }
+    footer ul {
+        padding-left: 0; 
+    }
+    footer ul li {
+        margin-bottom: 5px; 
+    }
+    footer p, footer address, footer small {
+        font-size: 0.95rem; 
+        line-height: 1.5;
+    }
+    .footer-link {
+        color: #FFF9E8; 
+        text-decoration: none; 
+        transition: color 0.3s ease; 
+    }
+
+    .footer-link:hover {
+        color: #ddd; 
+    }
+
+    @media (max-width: 767.98px) { 
+        .col-6 {
+            margin-bottom: 20px; 
+        }
+        .col-12.col-md-auto.text-center {
+            margin-bottom: 20px;
+        }
+    }   
 </style>
 
 
 <footer class="py-4">
     <div class="container">
-        <div class="row mb-3">
-            <div class="col-md-3">
-                <img src="assets/studyhublogo.png" alt="LOGO" class="company-logo">
-            </div>
-        
+        <div class="row g-4 mb-4 justify-content-center justify-content-md-between">
+            <div class="col-12 col-md-auto text-center text-md-start">
+                <img src="assets/studyhub_light.png" alt="LOGO" class="company-logo mb-3">
+                </div>
 
-            <div class="col-md-3">
-                <h5>Our Space</h5>
+            <div class="col-6 col-md-3 text-center text-md-start">
+                <h5 class="mb-3">Our Space</h5>
                 <ul class="list-unstyled">
-                    <li>Individual Desk</li>
-                    <li>Group Desk</li>
-                    <li>Ruang Kreatif</li>
-                    <li>Ruang Meeting</li>
+                    <li><a href="individual_desk.php" class="footer-link">Individual Desk</a></li>
+                    <li><a href="ruangfokus.php" class="footer-link">Ruang Fokus</a></li>
+                    <li><a href="ruangkreatif.php" class="footer-link">Ruang Kreatif</a></li>
+                    <li><a href="ruangmeeting.php" class="footer-link">Ruang Meeting</a></li>
                 </ul>
             </div>
 
-            <div class="col-md-3">
-                <h5>Open Hours</h5>
-                <p>Senin - Minggu</p>
-                <p>07.00 - 00.00</p>
+            <div class="col-6 col-md-3 text-center text-md-start">
+                <h5 class="mb-3">Open Hours</h5>
+                <p class="mb-1">Senin - Minggu</p>
+                <p>08.00 - 20.00</p>
             </div>
 
-            <div class="col-md-3">
-                <h5>Kontak</h5>
-                <p>Jl. Inovasi Raya No. 17, Sleman, DIY</p>
+            <div class="col-12 col-md-3 text-center text-md-start">
+                <h5 class="mb-3">Kontak</h5>
+                <address class="mb-0">
+                    Jl. Inovasi Raya No. 17, Sleman, DIY
+                </address>
             </div>
+        </div>
 
-            <div class="text-center border-top pt-3">
-                <small>2025 StudyHub Coworking Space. All Rights Reserved.</small>
+        <div class="row">
+            <div class="col-12 text-center border-top pt-3">
+                <small>&copy; 2025 StudyHub Coworking Space. All Rights Reserved.</small>
             </div>
         </div>
     </div>

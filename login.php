@@ -1,55 +1,51 @@
 <?php
-include_once(__DIR__ . "/config.php"); // Gunakan __DIR__ untuk path absolut yang aman
+include_once(__DIR__ . "/config.php"); 
 
-// --- Poin 2: Redirect jika sudah login ---
-// Jika user sudah login, langsung redirect ke index.php
 if (isLoggedIn()) {
     header("Location: index.php");
     exit();
 }
 
-$error = ""; // inisialisasi pesan error
-
-// --- Poin 3: Periksa pesan error dari config.php (jika koneksi DB gagal) ---
+$error = ""; 
 if (isset($_SESSION['error_message_db'])) {
     $error = $_SESSION['error_message_db'];
-    unset($_SESSION['error_message_db']); // Hapus pesan setelah ditampilkan
+    unset($_SESSION['error_message_db']);
 }
 
-// Pastikan koneksi database aktif sebelum melakukan query
+
+if (isset($_SESSION['error_message_db'])) {
+    $error = $_SESSION['error_message_db'];
+    unset($_SESSION['error_message_db']); 
+}
+
 if ($conn === null) {
-    // Error sudah ditangani di atas, tidak perlu proses form
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
     if (!empty($email) && !empty($password)) {
-        // --- Poin 4: Gunakan Prepared Statements untuk keamanan ---
         $stmt = $conn->prepare("SELECT ID_USER, USERNAME_USER, password FROM user WHERE email = ?");
         if ($stmt) {
-            $stmt->bind_param("s", $email); // 's' untuk string (email)
+            $stmt->bind_param("s", $email); 
             $stmt->execute();
             $result = $stmt->get_result();
 
             if ($result && $result->num_rows > 0) {
                 $user = $result->fetch_assoc();
 
-                // --- Poin 5: Verifikasi password hashed ---
                 if (password_verify($password, $user['password'])) {
-                    // Login sukses
-                    $_SESSION['user_id'] = $user['ID_USER']; // Konsisten menggunakan 'user_id'
-                    $_SESSION['username'] = $user['USERNAME_USER']; // Simpan username juga
-                    // $_SESSION['role'] = $user['ROLE']; // Jika ada kolom role di tabel user
+                    $_SESSION['user_id'] = $user['ID_USER']; 
+                    $_SESSION['username'] = $user['USERNAME_USER']; 
 
-                    header("Location: index.php"); // Redirect ke halaman utama
-                    exit(); // Penting: Hentikan eksekusi skrip
+                    header("Location: index.php"); 
+                    exit(); 
                 } else {
-                    $error = "Email atau password salah."; // Pesan umum untuk keamanan
+                    $error = "Email atau password salah."; 
                 }
             } else {
-                $error = "Email atau password salah."; // Pesan umum untuk keamanan
+                $error = "Email atau password salah."; 
             }
-            $stmt->close(); // Tutup prepared statement
+            $stmt->close(); 
         } else {
             $error = "Terjadi kesalahan sistem saat memproses login. Mohon coba lagi.";
             error_log("Prepare statement failed in login.php: " . $conn->error);
@@ -81,7 +77,7 @@ if ($conn === null) {
         }
         .form-control{
             background-color: #FFF9E8;
-            color: #CB6040; /* Ubah warna teks input agar terlihat */
+            color: #CB6040; 
             text-align: center;
         }
         .form-control::placeholder{

@@ -1,22 +1,7 @@
 <?php
-session_start();
-// echo "Isi session: ";
-// print_r($_SESSION);
+include_once(__DIR__ . "/config.php");
+requireLogin(); 
 
-include_once("config.php");
-requireLogin(); // pastikan user sudah login
-
-if (!isset($_SESSION['id_user'])) {
-    header("Location: login.php");
-    exit();
-}
-
-//konfigurasi search
-$search = isset($_GET['search']) ? mysqli_real_escape_string($conn, $_GET['search']) : '';
-$search_query = '';
-if (!empty($search)){
-    $search_query = "WHERE nim LIKE '%$search%' OR nama LIKE '%$search%' OR jurusan LIKE '%$search%' OR email LIKE '%$search%'";
-}
 ?>
 
 <!DOCTYPE html>
@@ -65,8 +50,20 @@ if (!empty($search)){
             height: 48px;
         }
         .facility-item i, .facility-item img {
-            font-size: 2rem;
+            font-size: 1rem;
             color: #CB6040;
+        }
+        .custom-btn-responsive {
+            background-color: #CB6040; 
+            border-color: #CB6040;
+            color: #FFF9E8 !important; 
+            padding: 10px 30px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        .custom-btn-responsive:hover {
+            background-color: #af5236;
+            border-color: #af5236;
         }
         .footer{
             background-color: #CB6040;
@@ -82,7 +79,7 @@ if (!empty($search)){
     <body>
         <?php include"layout/header.html"?>
 
-        <section class="hero">
+        <section id="hero-class" class="hero">
             <h1>STUDYHUB</h1>
             <p>Gama StudyHub adalah adalah ruang belajar bersama khusus mahasiswa UGM yang nyaman, modern, dan mendukung kolaborasi. Dilengkapi dengan fasilitas yang lengkap dan suasana kondusif, Gama StudyHub hadir sebagai solusi untuk kamu yang butuh tempat produktif di lingkungan kampus.</p>
             <div class="hero-buttons mt-4">
@@ -110,7 +107,7 @@ if (!empty($search)){
 
                     <div class="col-md-3 mb-4">
                         <div>
-                            <img src="air-condisioner.png" alt="AC" class="facility-icon">
+                            <img src="assets/air-condisioner.png" alt="AC" class="facility-icon">
                             <p>Jam Operasional<br>24 Jam</p>
                         </div>
                     </div>
@@ -140,10 +137,7 @@ if (!empty($search)){
 
                             <div class="card-footer d-flex justify-content-between align-items-center">
                                 <small>1 Orang</small>
-                                <!-- <button class="btn btn-outline-primary btn-sm">→</button> -->
-                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='layanan/individualdesk.php'">→</button>
-                                <!-- <button class="btn" onclick="window.location.href='reservasi/pilih_layanan.php'">Reservasi</button> -->
-
+                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='individualdesk.php'">→</button>
                             </div>
                         </div>
                     </div>
@@ -158,8 +152,7 @@ if (!empty($search)){
 
                             <div class="card-footer d-flex justify-content-between align-items-center">
                                 <small>4 -5 Orang</small>
-                                <!-- <button class="btn btn-outline-primary btn-sm">→</button> -->
-                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='layanan/ruangfokus.php'">→</button>
+                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='ruangfokus.php'">→</button>
 
                             </div>
                         </div>
@@ -175,8 +168,7 @@ if (!empty($search)){
 
                             <div class="card-footer d-flex justify-content-between align-items-center">
                                 <small>6 -8 Orang</small>
-                                <!-- <button class="btn btn-outline-primary btn-sm">→</button> -->
-                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='layanan/ruangkreatif.php'">→</button>
+                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='ruangkreatif.php'">→</button>
 
                             </div>
                         </div>
@@ -192,8 +184,7 @@ if (!empty($search)){
 
                             <div class="card-footer d-flex justify-content-between align-items-center">
                                 <small>9 - 13 Orang</small>
-                                <!-- <button class="btn btn-outline-primary btn-sm">→</button> -->
-                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='layanan/ruangmeeting.php'">→</button>
+                                <button class="btn btn-outline-primary btn-sm" onclick="window.location.href='ruangmeeting.php'">→</button>
                             </div>
                         </div>
                     </div>
@@ -202,7 +193,7 @@ if (!empty($search)){
         </section>
 
 
-        <section class="py-5">
+        <section id="faq-section" class="py-5">
             <div class="container">
                 <h2 class="text-center mb-5">Frequently Asked Questions</h2>
                 <div class="accordion" id="faqAccordion">
@@ -275,19 +266,22 @@ if (!empty($search)){
         </section>
 
         <section class="py-5">
-            <div class="container d-flex flex-column flex-md-row align-items-center">
-                <div class="col-md-6 mb-4 mb-md-0">
-                    <img src="assets/ruangmeeting.jpg" class="img-fluid rounded" alt="Study space">
-                </div>
-                <div class="col-md-6">
-                    <h4>Come On!</h4>
-                    <h2 class="fw-bold">Tingkatkan Produktivitasmu!</h2>
-                    <p class="mb-3">Butuh tempat buat rapat, organisasi, atau brainstorming bareng teman? Kami siap jadi ruang produktif kamu di luar kampus.</p>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" checked disabled>
-                        <label class="form-check-label">Senin - Minggu</label>
+            <div class="container">
+                <div class="row align-items-center justify-content-center g-4">
+                    <div class="col-12 col-md-6 order-md-1">
+                        <img src="assets/ruangmeeting.jpg" class="img-fluid rounded shadow-sm" alt="Study space">
                     </div>
-                    <a href="#" class="btn btn-light">RESERVASI</a>
+                    <div class="col-12 col-md-6 order-md-0 text-center text-md-start">
+                        <h4 class="text-muted mb-2">Come On!</h4>
+                        <h2 class="fw-bold display-5 mb-3">Tingkatkan Produktivitasmu!</h2>
+                        <p class="lead mb-4">Butuh tempat buat rapat, organisasi, atau brainstorming bareng teman? Kami siap jadi ruang produktif kamu di luar kampus.</p>
+                        <div class="form-check d-flex justify-content-center justify-content-md-start align-items-center mb-4">
+                            <input class="form-check-input me-2" type="checkbox" checked disabled id="seninMingguCheck">
+                            <label class="form-check-label" for="seninMingguCheck">Senin - Minggu</label>
+                        </div>
+                        <a href="#" class="btn btn-lg btn-warning fw-bold text-white custom-btn-responsive" onclick="window.location.href='reservasi/pilih_layanan.php'">RESERVASI</a>
+
+                    </div>
                 </div>
             </div>
         </section>

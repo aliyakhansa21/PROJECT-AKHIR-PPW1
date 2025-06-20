@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Ruang Kreatif - StudyHub</title>
+        <title>Individual Desk - StudyHub</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
         <style>
             body{
@@ -56,22 +56,22 @@
     </head>
 
     <body>
-        <?php include"../layout/header.html"?>
+        <?php include"layout/header.html"?>
 
         <div class="desk-header">
             <div class="container">
-                <h1>Ruang Kreatif</h1>
+                <h1>Individual Desk</h1>
             </div>
         </div>
 
         <div class="container my-4">
             <div class="row">
                 <div class="col-md-6">
-                    <img src="../assets/ruangkreatif.jpg" class="img-fluid rounded" alt="Galeri 1">
+                    <img src="assets/individualdesk.jpeg" class="img-fluid rounded" alt="Galeri 1">
                 </div>
 
                 <div class="col-md-6">
-                    <img src="../assets/ruangkreatif.jpg" class="img-fluid rounded" alt="Galeri 1">
+                    <img src="assets/individualdesk.jpeg" class="img-fluid rounded" alt="Galeri 1">
                 </div>
             </div>
         </div>
@@ -81,25 +81,22 @@
                 <div class="col-md-8">
                 <h2 class="text">Desc</h2>
                 <p>
-                    Ruang Kreatif 6 - 8 Orang dirancang untuk mendukung kolaborasi tim dan eksplorasi ide secara dinamis. Dengan suasana yang terbuka dan inspiratif, ruangan ini cocok digunakan untuk rapat tim kecil, sesi brainstorming, maupun diskusi proyek kreatif yang membutuhkan ruang gerak dan alat bantu visual.
+                    Individual Desk A dirancang untuk kenyamanan belajar atau bekerja secara individu. Lokasi strategis dengan akses Wi-Fi cepat, meja ergonomis, dan suasana tenang untuk meningkatkan produktivitas Anda.
                 </p>
                 <h4 class="mt-4">Fasilitas</h4>
                 <ul>
-                    <li>Meja besar fleksibel dan kursi nyaman untuk 6 - 8 orang</li>
+                    <li>Meja dan kursi ergonomis</li>
                     <li>WiFi cepat tanpa batas</li>
                     <li>AC dan ventilasi alami</li>
-                    <li>Stop kontak di setiap sudut ruangan</li>
-                    <li>Whiteboard besar dan pin board untuk ide visual</li>
-                    <li>Pencahayaan terang dan estetika ruang yang mendukung kreativitas</li>
-                    <li>Proyektor atau TV layar lebar (opsional tergantung ketersediaan)</li>
+                    <li>Stop kontak di setiap meja</li>
                 </ul>
                 </div>
 
                 <div class="col-md-4">
                 <div class="bg-white shadow-sm p-4 rounded" style="background-color: #FFEEDB; color:#CB6040">
                     <h4 class="text">Booking Sekarang!</h4>
-                    <p>Kapasitas 6 - 8 Orang</p>
-                    <a href="#" class="btn btn-reservasi w-100 mt-2" onclick="window.location.href='../reservasi/pilih_layanan.php'">Reservasi</a>
+                    <p>Kapasitas 1 Orang</p>
+                    <a href="#" class="btn btn-reservasi w-100 mt-2" onclick="window.location.href='reservasi/pilih_layanan.php'">Reservasi</a>
                 </div>
                 </div>
             </div>
@@ -107,7 +104,7 @@
         
 
 
-        <?php include"../layout/footer.html"?>
+        <?php include"layout/footer.html"?>
 
         
     </body>
