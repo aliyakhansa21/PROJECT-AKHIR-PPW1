@@ -1,32 +1,58 @@
 <?php
-session_start();
+include_once(__DIR__ . "/config.php"); // Gunakan __DIR__ untuk path absolut yang aman
 
-include_once("config.php"); 
+// --- Poin 2: Redirect jika sudah login ---
+// Jika user sudah login, langsung redirect ke index.php
+if (isLoggedIn()) {
+    header("Location: index.php");
+    exit();
+}
 
-$error = ""; // inisialisasi
+$error = ""; // inisialisasi pesan error
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = mysqli_real_escape_string($conn, $_POST['email'] ?? '');
+// --- Poin 3: Periksa pesan error dari config.php (jika koneksi DB gagal) ---
+if (isset($_SESSION['error_message_db'])) {
+    $error = $_SESSION['error_message_db'];
+    unset($_SESSION['error_message_db']); // Hapus pesan setelah ditampilkan
+}
+
+// Pastikan koneksi database aktif sebelum melakukan query
+if ($conn === null) {
+    // Error sudah ditangani di atas, tidak perlu proses form
+} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'] ?? '';
     $password = $_POST['password'] ?? '';
 
     if (!empty($email) && !empty($password)) {
-        $query = "SELECT * FROM user WHERE email = '$email'";
-        $result = mysqli_query($conn, $query);
+        // --- Poin 4: Gunakan Prepared Statements untuk keamanan ---
+        $stmt = $conn->prepare("SELECT ID_USER, USERNAME_USER, password FROM user WHERE email = ?");
+        if ($stmt) {
+            $stmt->bind_param("s", $email); // 's' untuk string (email)
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        if ($result && mysqli_num_rows($result) > 0) {
-            $user = mysqli_fetch_assoc($result);
+            if ($result && $result->num_rows > 0) {
+                $user = $result->fetch_assoc();
 
-            if (password_verify($password, $user['password'])) {
-                // Login sukses
-                $_SESSION['id_user'] = $user['ID_USER'];
-                $_SESSION['username'] = $user['USERNAME_USER'];
-                header("Location: index.php");
-                exit();
+                // --- Poin 5: Verifikasi password hashed ---
+                if (password_verify($password, $user['password'])) {
+                    // Login sukses
+                    $_SESSION['user_id'] = $user['ID_USER']; // Konsisten menggunakan 'user_id'
+                    $_SESSION['username'] = $user['USERNAME_USER']; // Simpan username juga
+                    // $_SESSION['role'] = $user['ROLE']; // Jika ada kolom role di tabel user
+
+                    header("Location: index.php"); // Redirect ke halaman utama
+                    exit(); // Penting: Hentikan eksekusi skrip
+                } else {
+                    $error = "Email atau password salah."; // Pesan umum untuk keamanan
+                }
             } else {
-                $error = "Password salah.";
+                $error = "Email atau password salah."; // Pesan umum untuk keamanan
             }
+            $stmt->close(); // Tutup prepared statement
         } else {
-            $error = "Email tidak ditemukan.";
+            $error = "Terjadi kesalahan sistem saat memproses login. Mohon coba lagi.";
+            error_log("Prepare statement failed in login.php: " . $conn->error);
         }
     } else {
         $error = "Mohon isi semua data.";
@@ -38,7 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <!-- <link rel="stylesheet" href="style.css"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Log In</title>
     <style>
@@ -56,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         .form-control{
             background-color: #FFF9E8;
-            color: white;
+            color: #CB6040; /* Ubah warna teks input agar terlihat */
             text-align: center;
         }
         .form-control::placeholder{
@@ -91,7 +116,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="signup-card text-center">
         <h2 class="mb-4" style="color:#CB6040;">LOG IN</h2>
-        
+
         <?php if (!empty($error)) : ?>
             <div class="error-msg"><?= htmlspecialchars($error) ?></div>
         <?php endif; ?>

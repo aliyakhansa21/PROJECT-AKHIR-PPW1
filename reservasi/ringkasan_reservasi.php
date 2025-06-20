@@ -6,42 +6,48 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['id_sesi'] = $_POST['id_sesi'];
 }
 
+
 $id_layanan = $_SESSION['id_layanan'] ?? null;
 $id_sesi = $_SESSION['id_sesi'] ?? null;
+$tanggal_reservasi = $_SESSION['tanggal_reservasi'] ?? null; // Ambil tanggal reservasi
 $id_kursi = $_SESSION['id_kursi'] ?? null;
 $id_ruangan = $_SESSION['id_ruangan'] ?? null;
 
-if (!$id_layanan || !$id_sesi || (!$id_kursi && !$id_ruangan)) {
+if (!$id_layanan || !$id_sesi || (!$id_kursi && !$id_ruangan) || !$tanggal_reservasi) {
     echo "Data reservasi tidak lengkap. <a href='pilih_layanan.php'>Kembali</a>";
     exit;
 }
 
-$layanan = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM layanan WHERE id_layanan = '$id_layanan'"));
-$sesi = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM sesi WHERE id_sesi = '$id_sesi'"));
-$unit = null;
-
-// if (!isset($_POST['id_sesi'])){
-//     header("Location: pilih_sesi.php");
-//     exit;
-// }
-
-// $_SESSION['id_sesi'] = $_POST['id_sesi'];
-// $id_user = 1;
-
-// $id_layanan = $_SESSION['id_layanan'];
-// $id_kursi = $_SESSION['id_kursi'];
-// $id_ruangan = $_SESSION['id_ruangan'];
-// $id_sesi = $_SESSION['id_sesi'];
+$layanan = mysqli_fetch_assoc(mysqli_query($conn, "SELECT NAMA_LAYANAN, TIPE FROM layanan WHERE ID_LAYANAN = '$id_layanan'"));
+$sesi = mysqli_fetch_assoc(mysqli_query($conn, "SELECT NAMA_SESI, JAM_MULAI, JAM_SELESAI FROM sesi WHERE ID_SESI = '$id_sesi'"));
 
 
-
-// if ($id_kursi){
-//     $unit = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM kursi WHERE id_kursi = '$id_kursi'"));
-//     $unit_text = "Kursi" . $unit['nomor_kursi'];
-// } else{
-//     $unit = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM ruangan WHERE id_ruangan = '$id_ruangan'"));
-//     $unit_text = $unit['NAMA_RUANGAN'];
-// }
+$unit_text = ""; // Variabel untuk teks unit yang dipilih
+if ($id_kursi){
+    // Query dengan JOIN untuk ambil nama ruangan juga
+    $stmt_kursi = $conn->prepare("SELECT k.NOMOR_KURSI, r.NAMA_RUANGAN
+                                FROM kursi k
+                                JOIN ruangan r ON k.ID_RUANGAN = r.ID_RUANGAN
+                                WHERE k.ID_KURSI = ?");
+    $stmt_kursi->bind_param("i", $id_kursi);
+    $stmt_kursi->execute();
+    $result_kursi = $stmt_kursi->get_result();
+    $kursi = $result_kursi->fetch_assoc();
+    $stmt_kursi->close();
+    if ($kursi) {
+        $unit_text = "Kursi " . htmlspecialchars($kursi['NOMOR_KURSI']) . " (Ruangan " . htmlspecialchars($kursi['NAMA_RUANGAN']) . ")";
+    }
+} elseif ($id_ruangan){
+    $stmt_ruangan = $conn->prepare("SELECT NAMA_RUANGAN FROM ruangan WHERE ID_RUANGAN = ?");
+    $stmt_ruangan->bind_param("i", $id_ruangan);
+    $stmt_ruangan->execute();
+    $result_ruangan = $stmt_ruangan->get_result();
+    $ruangan = $result_ruangan->fetch_assoc();
+    $stmt_ruangan->close();
+    if ($ruangan) {
+        $unit_text = "Ruangan " . htmlspecialchars($ruangan['NAMA_RUANGAN']);
+    }
+}
 ?> 
 
 <!DOCTYPE html>
@@ -96,8 +102,8 @@ $unit = null;
                     <div class="card-body">
                         <h2 class="card-title text-center mb-4">Ringkasan Reservasi</h2>
                         <ul class="list-group mb-4">
-                            <li class="list-group-item"><strong>Layanan:</strong> <?= htmlspecialchars($layanan['NAMA_LAYANAN']) ?></li>
-                            <li class="list-group-item"><strong><?= $unit_text ?></strong></li>
+                            <li class="list-group-item"><strong>Unit:</strong> <?= htmlspecialchars($unit_text) ?></li>
+                            <li class="list-group-item"><strong>Tanggal:</strong> <?= htmlspecialchars($tanggal_reservasi) ?></li>
                             <li class="list-group-item">
                                 <strong>Sesi:</strong> <?= htmlspecialchars($sesi['NAMA_SESI']) ?> (<?= $sesi['JAM_MULAI'] ?> - <?= $sesi['JAM_SELESAI'] ?>)
                             </li>

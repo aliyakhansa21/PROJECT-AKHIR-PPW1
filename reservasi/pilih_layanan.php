@@ -1,14 +1,47 @@
 <?php
+ini_set('display_errors', 0); // Nonaktifkan tampilan error di browser
+ini_set('log_errors', 1);    // Aktifkan logging error ke php_error_log
+error_reporting(E_ALL);      // Laporkan semua jenis error
 session_start();
-include '../config.php';
+// --- Poin 1: Gunakan path absolut untuk include config.php ---
+// Ini memastikan path ke config.php selalu benar, tidak peduli dari mana file ini diakses.
+include __DIR__ . '/../config.php';
+// include '../config.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $_SESSION['id_layanan'] = $_POST['id_layanan'];
-    header('Location: pilih_unit.php');
+// --- Perbaikan: Validasi koneksi database di sini juga ---
+if (!$conn) {
+    // Jika koneksi gagal, catat error dan berikan pesan ke user
+    error_log("Koneksi database gagal di pilih_layanan.php: " . mysqli_connect_error());
+    $_SESSION['error_message'] = "Terjadi masalah pada koneksi database. Silakan coba lagi nanti.";
+    header('Location: ../index.php'); // Redirect ke halaman utama atau error
     exit;
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // echo "<pre>";
+    // print_r($_POST); // Ini akan menampilkan semua data yang dikirim via POST
+    // echo "</pre>";
+    // exit; // Hentikan eksekusi di sini untuk melihat output $_POST
+    // // --- Perbaikan: Validasi bahwa id_layanan benar-benar ada di POST ---
+    if (isset($_POST['id_layanan']) && !empty($_POST['id_layanan'])) {
+        $_SESSION['id_layanan'] = $_POST['id_layanan'];
+        header('Location: pilih_unit.php');
+        exit; // Sangat penting untuk menghentikan eksekusi setelah redirect
+    } else {
+        $_SESSION['error_message'] = "Pilihan layanan tidak valid. Silakan pilih kembali.";
+        header('Location: pilih_layanan.php'); // Kembali ke halaman ini dengan pesan error
+        exit;
+    }
+}
+
 $query = mysqli_query($conn, "SELECT * FROM layanan");
+// --- Perbaikan: Penanganan jika query gagal (misal tabel tidak ada) ---
+if (!$query) {
+    error_log("Query layanan gagal di pilih_layanan.php: " . mysqli_error($conn));
+    $_SESSION['error_message'] = "Tidak dapat memuat daftar layanan. Silakan coba lagi nanti.";
+    header('Location: ../index.php'); // Redirect ke halaman utama atau error
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -92,7 +125,9 @@ $query = mysqli_query($conn, "SELECT * FROM layanan");
                                 </div>
 
                                 <div class="d-grid mt-4">
-                                    <button type="submit" class="btn">Lanjut</button>
+                                    <!-- <button type="submit" class="btn">Lanjut</button> -->
+                                    <button type="submit" class="btn" <?= (mysqli_num_rows($query) == 0) ? 'disabled' : '' ?>>Lanjut</button>
+
                                 </div>
                             </form>
 
